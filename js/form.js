@@ -63,11 +63,11 @@ formCapacity.addEventListener('change', function () {
 /**
  * Функция-обработчик события клика по одному из
  * элементов .pins[] (маркеры)
- * @param {HTMLDivElement} pin Маркер, который вызвал событие клика
+ * @param {MouseEvent} e Событие
  */
-function eventHandlerClickPin() {
+function eventHandlerClickPin(e) {
   removeActivePin();
-  addActivePin(this);
+  addActivePin(e.currentTarget);
   dialog.style.display = 'block';
 }
 
