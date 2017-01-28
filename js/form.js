@@ -31,12 +31,9 @@ window.addEventListener('load', function () {
 });
 
 for (var i = 0; i < pins.length; i++) {
-  (function () {
-    var pin = pins[i];
-    pin.addEventListener('click', function () {
-      addActivePin(pin);
-    });
-  })();
+  pins[i].addEventListener('click', function (e) {
+    eventHandlerClickPin(e.currentTarget);
+  });
 }
 
 dialogClose.addEventListener('click', function (e) {
@@ -66,13 +63,22 @@ formCapacity.addEventListener('change', function () {
 });
 
 /**
+ * Функция-обработчик события клика по одному из
+ * элементов .pins[] (маркеры)
+ * @param {HTMLDivElement} pin Маркер, который вызвал событие клика
+ */
+function eventHandlerClickPin(pin) {
+  removeActivePin();
+  addActivePin(pin);
+  dialog.style.display = 'block';
+}
+
+/**
  * На нажатый маркер добавляется класс активности
- * @param {object} pin Маркер, на который нажали
+ * @param {HTMLDivElement} pin Нажатый маркер
  */
 function addActivePin(pin) {
-  removeActivePin();
   pin.classList.add('pin--active');
-  dialog.style.display = 'block';
 }
 
 /**
