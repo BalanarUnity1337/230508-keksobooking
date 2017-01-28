@@ -31,9 +31,7 @@ window.addEventListener('load', function () {
 });
 
 for (var i = 0; i < pins.length; i++) {
-  pins[i].addEventListener('click', function (e) {
-    eventHandlerClickPin(e.currentTarget);
-  });
+  pins[i].addEventListener('click', eventHandlerClickPin);
 }
 
 dialogClose.addEventListener('click', function (e) {
@@ -67,9 +65,9 @@ formCapacity.addEventListener('change', function () {
  * элементов .pins[] (маркеры)
  * @param {HTMLDivElement} pin Маркер, который вызвал событие клика
  */
-function eventHandlerClickPin(pin) {
+function eventHandlerClickPin() {
   removeActivePin();
-  addActivePin(pin);
+  addActivePin(this);
   dialog.style.display = 'block';
 }
 
