@@ -13,9 +13,7 @@ window.initializePins = function () {
     }
   });
 
-  pinMap.addEventListener('click', function (e) {
-    eventHandlerPin(e);
-  });
+  pinMap.addEventListener('click', eventHandlerPin);
 
   dialogClose.addEventListener('click', function (e) {
     e.preventDefault();
