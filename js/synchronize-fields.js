@@ -30,7 +30,6 @@ window.synchronizeFields = function (syncField1, syncField2, syncValues1, syncVa
 
   /**
    * Функция синхронизирует первое поле со вторым
-   * Про selectedIndex не забудь
    */
   function syncField1WithField2() {
     var indexOfSelectedValue = syncValues2.indexOf(syncField2.value);
