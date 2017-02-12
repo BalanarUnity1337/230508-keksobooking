@@ -3,10 +3,6 @@
 window.initializePins = (function () {
   (function () {
     var pinMap = document.querySelector('.tokyo__pin-map');
-    var dialog = document.querySelector('.dialog');
-    var dialogClose = dialog.querySelector('.dialog__close');
-
-    var ESCAPE_KEY_CODE = 27;
 
     pinMap.addEventListener('keydown', function (e) {
       if (window.utils.isActivateEvent(e)) {
@@ -16,22 +12,20 @@ window.initializePins = (function () {
 
     pinMap.addEventListener('click', eventHandlerPin);
 
-    dialogClose.addEventListener('click', function (e) {
-      e.preventDefault();
-      hideDialog();
-      removeActivePin();
-    });
-
     /**
      * Функция-обработчик события клика или нажатия с клавиатуры
      * по одному из пинов (маркеры)
-     * @param {MouseEvent} e Событие
+     * @param {MouseEvent|KeyboardEvent} e Событие
      */
     function eventHandlerPin(e) {
       var pin = (e.target.classList.contains('pin')) ? e.target : e.target.parentElement;
-      removeActivePin();
-      addActivePin(pin);
-      showDialog();
+      var changePinProperties = (e.type === 'keydown') ? function () {
+        pin.focus();
+        removeActivePin();
+      } : function () {
+        removeActivePin();
+      };
+      window.showCard(changePinProperties, addActivePin(pin));
     }
 
     /**
@@ -54,40 +48,11 @@ window.initializePins = (function () {
         window.utils.toggleAriaPressed(pinActive);
       }
     }
-
-    /**
-     * Проверяем был ли нажат Escape
-     * Если был, то скрываем окно диалога и деактивируем активный пин
-     * @param {KeyboardEvent} e
-     */
-    function eventHandlerKeydownDialog(e) {
-      if (e.keyCode === ESCAPE_KEY_CODE) {
-        removeActivePin();
-        hideDialog();
-      }
-    }
-
-    /**
-     * Показываем окно диалога и добавляем
-     * прослушку события нажатия на клавиатуру
-     */
-    function showDialog() {
-      dialog.style.display = 'block';
-      document.addEventListener('keydown', eventHandlerKeydownDialog);
-    }
-
-    /**
-     * Скрываем окно диалога и удаляем
-     * прослушку события нажатия на клавиатуру
-     */
-    function hideDialog() {
-      dialog.style.display = 'none';
-      document.removeEventListener('keydown', eventHandlerKeydownDialog);
-    }
   })();
 
   window.utils = (function () {
     var ENTER_KEY_CODE = 13;
+    var ESCAPE_KEY_CODE = 27;
 
     return {
       /**
@@ -106,6 +71,16 @@ window.initializePins = (function () {
        */
       isActivateEvent: function (e) {
         return e.keyCode === ENTER_KEY_CODE;
+      },
+
+      /**
+       * Проверяем был ли нажат Escape
+       * Если был, то скрываем окно диалога и деактивируем активный пин
+       * @param {KeyboardEvent} e
+       * @return {Boolean} Возвращается true, если был нажат Escape
+       */
+      isDeactivateEvent: function (e) {
+        return e.keyCode === ESCAPE_KEY_CODE;
       }
     };
   })();
