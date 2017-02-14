@@ -25,7 +25,7 @@ window.initializePins = (function () {
       } : function () {
         removeActivePin();
       };
-      window.showCard(changePinProperties, addActivePin(pin));
+      window.showCard(addActivePin, changePinProperties, pin);
     }
 
     /**
@@ -34,7 +34,7 @@ window.initializePins = (function () {
      */
     function addActivePin(pin) {
       pin.classList.add('pin--active');
-      window.utils.toggleAriaPressed(pin);
+      pin.setAttribute('aria-pressed', 'true');
     }
 
     /**
@@ -45,7 +45,7 @@ window.initializePins = (function () {
       var pinActive = document.querySelector('.pin--active');
       if (pinActive) {
         pinActive.classList.remove('pin--active');
-        window.utils.toggleAriaPressed(pinActive);
+        pinActive.setAttribute('aria-pressed', 'false');
       }
     }
   })();
@@ -55,15 +55,6 @@ window.initializePins = (function () {
     var ESCAPE_KEY_CODE = 27;
 
     return {
-      /**
-       * Переключаем состояние роли Button 'aria-pressed'
-       * @param {HTMLDivElement} element
-       */
-      toggleAriaPressed: function (element) {
-        var pressed = (element.getAttribute('aria-pressed') === 'true');
-        element.setAttribute('aria-pressed', !pressed);
-      },
-
       /**
        * Проверяем нажатие Enter
        * @param {KeyboardEvent} e

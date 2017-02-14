@@ -4,12 +4,17 @@ window.showCard = (function () {
   var dialog = document.querySelector('.dialog');
   var dialogClose = dialog.querySelector('.dialog__close');
   var onDialogClose;
+  var setPinActive;
 
   /**
    * Показываем окно диалога и добавляем
    * прослушку события нажатия на клавиатуру
+   * @param {HTMLDivElement} pin Текущий нажатый маркер
    */
-  function showDialog() {
+  function showDialog(pin) {
+    if (typeof setPinActive === 'function') {
+      setPinActive(pin);
+    }
     dialog.classList.remove('dialog--invisible');
     dialogClose.focus();
     document.addEventListener('keydown', eventHandlerKeydownDialog);
@@ -40,9 +45,10 @@ window.showCard = (function () {
     }
   }
 
-  return function (callback) {
-    showDialog();
-    onDialogClose = callback;
+  return function (addActivePin, changePinOnDialogClose, currentPin) {
+    setPinActive = addActivePin;
+    showDialog(currentPin);
+    onDialogClose = changePinOnDialogClose;
     dialogClose.addEventListener('click', hideDialog);
   };
 })();
