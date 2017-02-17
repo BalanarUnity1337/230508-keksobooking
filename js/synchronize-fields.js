@@ -8,13 +8,13 @@
  * @param {HTMLSelectElement|HTMLInputElement} syncField2 Второе синхронизируемое поле
  * @param {Array} syncValues1 Массив синхронизируемых значений первого поля
  * @param {Array} syncValues2 Массив синхронизируемых значений второго поля
- * @param {String} syncProperty Свойство поля, которое необходимо синхронизировать
  */
 window.synchronizeFields = (function () {
-  return function (syncField1, syncField2, syncValues1, syncValues2, syncProperty, callback) {
+  return function (syncField1, syncField2, syncValues1, syncValues2, callback) {
     syncField1.addEventListener('change', function () {
+      var indexOfSelectedValue = syncValues1.indexOf(syncField1.value);
       if (typeof callback === 'function') {
-        callback(syncField1, syncField2, syncValues1, syncValues2, syncProperty);
+        callback(syncField2, syncValues2[indexOfSelectedValue]);
       }
     });
   };

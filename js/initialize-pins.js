@@ -18,10 +18,8 @@ window.initializePins = (function () {
    */
   function eventHandlerPin(e) {
     var pin = (e.target.classList.contains('pin')) ? e.target : e.target.parentElement;
-    window.initializePins(function () {
-      removeActivePin();
-      addActivePin(pin);
-    });
+    removeActivePin();
+    addActivePin(pin);
     var changePinProperties = (e.type === 'keydown') ? function () {
       pin.focus();
       removeActivePin();
@@ -51,8 +49,4 @@ window.initializePins = (function () {
       pinActive.setAttribute('aria-pressed', 'false');
     }
   }
-
-  return function (callback) {
-    callback();
-  };
 })();

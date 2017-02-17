@@ -19,23 +19,27 @@
   formTitle.maxLength = 100;
   formAddress.required = true;
 
-  window.synchronizeFields(formTime, formTimeout, ['12', '13', '14'], ['12', '13', '14'], 'value', synchronizeFields);
-  window.synchronizeFields(formTimeout, formTime, ['12', '13', '14'], ['12', '13', '14'], 'value', synchronizeFields);
-  window.synchronizeFields(formType, formPrice, ['flat', 'bungalow', 'palace'], ['1000', '0', '10000'], 'min', synchronizeFields);
-  window.synchronizeFields(formPrice, formType, ['1000', '0', '10000'], ['flat', 'bungalow', 'palace'], 'min', synchronizeFields);
-  window.synchronizeFields(formRoomNumber, formCapacity, ['1', '2', '100'], ['0', '3', '3'], 'value', synchronizeFields);
-  window.synchronizeFields(formCapacity, formRoomNumber, ['0', '3', '3'], ['1', '2', '100'], 'value', synchronizeFields);
+  window.synchronizeFields(formTime, formTimeout, ['12', '13', '14'], ['12', '13', '14'], syncPropertyValue);
+  window.synchronizeFields(formTimeout, formTime, ['12', '13', '14'], ['12', '13', '14'], syncPropertyValue);
+  window.synchronizeFields(formType, formPrice, ['flat', 'bungalow', 'palace'], ['1000', '0', '10000'], syncPropertyMin);
+  window.synchronizeFields(formRoomNumber, formCapacity, ['1', '2', '100'], ['0', '3', '3'], syncPropertyValue);
+  window.synchronizeFields(formCapacity, formRoomNumber, ['0', '3', '3'], ['1', '2', '100'], syncPropertyValue);
 
   /**
-   * Функция синхронизирует второе поле с первым
-   * @param {HTMLSelectElement|HTMLInputElement} syncField1 Первое синхронизируемое поле
-   * @param {HTMLSelectElement|HTMLInputElement} syncField2 Второе синхронизируемое поле
-   * @param {Array} syncValues1 Массив синхронизируемых значений первого поля
-   * @param {Array} syncValues2 Массив синхронизируемых значений второго поля
-   * @param {String} syncProperty Свойство поля, которое снихронизируется
+   *
+   * @param {HTMLSelectElement|HTMLInputElement} element Поле, которое синхронизируется
+   * @param {String} value Значение, которое необходимо присвоить полю
    */
-  function synchronizeFields(syncField1, syncField2, syncValues1, syncValues2, syncProperty) {
-    var indexOfSelectedValue = syncValues1.indexOf(syncField1.value);
-    syncField2[syncProperty] = syncValues2[indexOfSelectedValue];
+  function syncPropertyValue(element, value) {
+    element.value = value;
+  }
+
+  /**
+   *
+   * @param {HTMLSelectElement} element Поле, которое синхронизируется
+   * @param {String} value Значение, которое необходимо присвоить полю
+   */
+  function syncPropertyMin(element, value) {
+    element.min = value;
   }
 })();
