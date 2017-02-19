@@ -18,12 +18,11 @@ window.initializePins = (function () {
    * @param {MouseEvent} e Нажатие мышкой
    */
   function eventHandlerClickPin(e) {
-    var pin = (e.target.classList.contains('pin')) ? e.target : e.target.parentElement;
-
+    var currentPin = (e.target.classList.contains('pin')) ? e.target : e.target.parentElement;
     removeActivePin();
-    addActivePin(pin);
+    addActivePin(currentPin);
 
-    window.showCard(removeActivePin);
+    window.showCard(removeActivePin, currentPin.content);
   }
 
   /**
@@ -38,25 +37,25 @@ window.initializePins = (function () {
 
     window.showCard(function () {
       returnFocusPin(e.target);
-    });
+    }, e.target.content);
   }
 
   /**
    * Функция удаляет активный маркер и возвращает на него фокус
-   * @param {HTMLDivElement} pin Маркер, которому необходимо вернуть фокус при закрытии диалога
+   * @param {HTMLDivElement} currentPin Маркер, которому необходимо вернуть фокус при закрытии диалога
    */
-  function returnFocusPin(pin) {
+  function returnFocusPin(currentPin) {
     removeActivePin();
-    pin.focus();
+    currentPin.focus();
   }
 
   /**
    * На нажатый маркер добавляется класс активности
-   * @param {HTMLDivElement} pin Нажатый маркер
+   * @param {HTMLDivElement} currentPin Нажатый маркер
    */
-  function addActivePin(pin) {
-    pin.classList.add('pin--active');
-    pin.setAttribute('aria-pressed', 'true');
+  function addActivePin(currentPin) {
+    currentPin.classList.add('pin--active');
+    currentPin.setAttribute('aria-pressed', 'true');
   }
 
   /**
@@ -71,4 +70,15 @@ window.initializePins = (function () {
       pinActive.setAttribute('aria-pressed', 'false');
     }
   }
+
+  window.load(
+      'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data',
+      function (evt) {
+        var similarApartments = evt.target.response;
+
+        similarApartments.forEach(function (apartment) {
+          pinMap.appendChild(window.renderPin(apartment));
+        });
+      }
+  );
 })();
