@@ -14,6 +14,7 @@ window.renderPin = (function () {
 
     pinClone.style.left = advertisement.location.x + 'px';
     pinClone.style.top = advertisement.location.y + 'px';
+    pinClone.querySelector('img').src = advertisement.author.avatar;
 
     pinClone.content = advertisement;
 
