@@ -633,6 +633,10 @@ select option:hover {
     background-image: url("../img/pin-active.png");
 }
 
+.pin--invisible {
+  display: none;
+}
+
 .pin img {
     margin-left: 8px;
     margin-top: 8px;
